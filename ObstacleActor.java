@@ -142,8 +142,7 @@ public class ObstacleActor extends DamageableActor {
 		setPosition(x, y); 
 	
 	}
-	
-	@Override
+
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 		

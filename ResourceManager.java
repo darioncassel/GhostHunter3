@@ -5,7 +5,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Disposable;
 
 public class ResourceManager implements Disposable {
@@ -37,9 +37,9 @@ public class ResourceManager implements Disposable {
 		} else {
 		
 			ret = new BitmapFont(Gdx.files.internal("data/bebas_neue.fnt"), false);
-			TextBounds bounds = ret.getBounds("K");
-			float scaleFactor = height/bounds.height;
-			ret.setScale(scaleFactor);
+            GlyphLayout layout = new GlyphLayout();
+            layout.setText(ret, "k");
+			float scaleFactor = height/layout.height;
 			mFontMap.put(height, ret);
 		}
 		

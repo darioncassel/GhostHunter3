@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -19,8 +19,9 @@ public class TextActor extends Actor {
 	}
 	
 	private void recalcBounds() {
-		TextBounds bounds = mFont.getBounds(this.mText);
-		setSize(bounds.width, bounds.height);
+        GlyphLayout layout = new GlyphLayout();
+        layout.setText(mFont, "k");
+		setSize(layout.width, layout.height);
 	}
 	
 	public void setText(String text) {
@@ -36,8 +37,7 @@ public class TextActor extends Actor {
 		recalcBounds();
 		
 	}
-	
-	@Override
+
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 		
