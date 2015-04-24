@@ -15,7 +15,7 @@ public class MyGdxGame extends ApplicationAdapter {
     Sprite sprite;
     World world;
     Body body;
-
+	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -23,7 +23,7 @@ public class MyGdxGame extends ApplicationAdapter {
         sprite = new Sprite(img);
         sprite.setPosition(Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2);
-        world = new World(new Vector2(0, -98f), true);
+        world = new World(new Vector2(0, 0), true);
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(sprite.getX(), sprite.getY());
