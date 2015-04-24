@@ -20,10 +20,10 @@ public class ResourceManager implements Disposable {
 		mInstance = this;
 	}
 
-	public Texture playerShipTexture;
-	public Texture playerShipJetTexture;
+	public Texture playerTexture;
+	public Texture playerJetTexture;
 	public Texture blank16Texture;
-	public Texture saucerTexture;
+	public Texture ghostTexture;
 	public final Texture[] ObstacleTextureArray = new Texture[4];
 
 
@@ -48,10 +48,10 @@ public class ResourceManager implements Disposable {
 
 	public void loadResources() {
 
-		playerShipTexture = new Texture(Gdx.files.internal("data/player.png"));
-		playerShipJetTexture = new Texture(Gdx.files.internal("data/player_jet.png"));
+		playerTexture = new Texture(Gdx.files.internal("data/player.png"));
+		playerJetTexture = new Texture(Gdx.files.internal("data/player_jet.png"));
 		blank16Texture = new Texture(Gdx.files.internal("data/blank16.png"));
-		saucerTexture = new Texture(Gdx.files.internal("data/saucer.png"));
+		ghostTexture = new Texture(Gdx.files.internal("data/ghost.png"));
 
 		for(int i = 0; i < 4; i++) {
 			ObstacleTextureArray[i] = new Texture(Gdx.files.internal("data/Obstacle" + i + ".png"));
@@ -61,10 +61,10 @@ public class ResourceManager implements Disposable {
 
 	@Override
 	public void dispose() {
-		playerShipJetTexture.dispose();
-		playerShipTexture.dispose();
+		playerJetTexture.dispose();
+		playerTexture.dispose();
 		blank16Texture.dispose();
-		saucerTexture.dispose();
+		ghostTexture.dispose();
 		for(Texture texture : ObstacleTextureArray) {
 			texture.dispose();
 		}
