@@ -64,7 +64,7 @@ public class GhostActor extends DamageableActor {
 	public void damage(float angle) {
 		super.damage(angle);
         MainGameScreen.getInstance().incrementScore();
-        MainGameScreen.getInstance().queueFlyingSaucerSpawn();
+        MainGameScreen.getInstance().queueGhostSpawn();
 	}
 
 	
