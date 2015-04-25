@@ -13,13 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 public class GameOverScreen implements Screen {
 	
 	private Stage mStage;
-
     private BitmapFont mFont;
     private Color textColor;
 	
-	private static com.mygdx.game.GameOverScreen mInstance;
+	private static GameOverScreen mInstance;
 	
-	public static com.mygdx.game.GameOverScreen getInstance() {
+	public static GameOverScreen getInstance() {
 		return mInstance;
 	}
 
@@ -28,6 +27,7 @@ public class GameOverScreen implements Screen {
 	public GameOverScreen() {
 		mInstance = this;
 		mStage = new Stage();
+        mInstance = this;
         mFont = new BitmapFont();
         textColor = new Color();
         textColor.set(1,1,1,1);
@@ -35,7 +35,7 @@ public class GameOverScreen implements Screen {
 
 		TextActor gameOverTextActor;;
 		gameOverTextActor = new TextActor("GAME OVER", textStyle);
-		gameOverTextActor.setScale(5);
+		gameOverTextActor.setFontScale(5);
 		float x = Gdx.graphics.getWidth() / 2 - gameOverTextActor.getWidth()/2;
 		float y = Gdx.graphics.getHeight() / 2 - gameOverTextActor.getHeight()/2;
 		gameOverTextActor.setPosition(x, y);
@@ -43,9 +43,8 @@ public class GameOverScreen implements Screen {
 		mStage.addActor(gameOverTextActor);
 		
 		mScoreTextActor = new TextActor("", textStyle);
-		mScoreTextActor.setFontScale(Gdx.graphics.getWidth()/30);
+		mScoreTextActor.setFontScale(5);
 		y -= mScoreTextActor.getHeight() + Gdx.graphics.getWidth() / 25;
-		
 		mScoreTextActor.setY(y);
 		
 		mStage.addActor(mScoreTextActor);
@@ -62,18 +61,16 @@ public class GameOverScreen implements Screen {
         mStage.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				GhostHunterGame.getInstance().setScreen(SplashScreen.getInstance());
-				return true;
-			}
-			
-		});
-		
-		Gdx.input.setInputProcessor(mStage);
+                GhostHunterGame.getInstance().setScreen(SplashScreen.getInstance());
+                return true;
+            }
+        });
+
 	}
 	
 	public void setScore(int score) {
 		
-		mScoreTextActor.setText("SCORE : " + score);
+		mScoreTextActor.updateText("SCORE : " + score);
 		float x = Gdx.graphics.getWidth() / 2 - mScoreTextActor.getWidth()/2;
 		mScoreTextActor.setX(x);
 		
@@ -91,12 +88,12 @@ public class GameOverScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
+		
 	}
 	
 	@Override
 	public void dispose() {
 		mStage.dispose();
-		
 	}
 
 	@Override

@@ -3,21 +3,21 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class SplashScreen implements Screen {
 
     private Stage mStage = new Stage();
-    private static com.mygdx.game.SplashScreen mInstance;
+    private static SplashScreen mInstance;
     private BitmapFont mFont;
     private Color textColor;
 
-    public static com.mygdx.game.SplashScreen getInstance() {
+    public static SplashScreen getInstance() {
         return mInstance;
     }
 
@@ -36,7 +36,7 @@ public class SplashScreen implements Screen {
 
         TextActor touchStart = new TextActor("TOUCH THE SCREEN TO START!", textStyle);
         touchStart.setFontScale(5);
-        x = Gdx.graphics.getWidth() /2 - touchStart.getWidth()/2;
+        x = Gdx.graphics.getWidth() /2 - title.getWidth()/2;;
         y = Gdx.graphics.getWidth() / 30;
         touchStart.setPosition(x, y);
 
@@ -46,9 +46,9 @@ public class SplashScreen implements Screen {
         mStage.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                MainGameScreen.getInstance().initializeGame();
-                GhostHunterGame.getInstance().setScreen(MainGameScreen.getInstance());
-                return true;
+            MainGameScreen.getInstance().initializeGame();
+            GhostHunterGame.getInstance().setScreen(MainGameScreen.getInstance());
+            return true;
             }
         });
     }
@@ -57,9 +57,9 @@ public class SplashScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         mStage.act();
         mStage.draw();
-
     }
 
     @Override
@@ -69,7 +69,6 @@ public class SplashScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(mStage);
-
     }
 
     @Override
