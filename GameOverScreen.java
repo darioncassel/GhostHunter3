@@ -2,14 +2,20 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class GameOverScreen implements Screen {
 	
 	private Stage mStage;
+
+    private BitmapFont mFont;
+    private Color textColor;
 	
 	private static com.mygdx.game.GameOverScreen mInstance;
 	
@@ -22,41 +28,40 @@ public class GameOverScreen implements Screen {
 	public GameOverScreen() {
 		mInstance = this;
 		mStage = new Stage();
+        mFont = new BitmapFont();
+        textColor = new Color();
+        textColor.set(1,1,1,1);
+        Label.LabelStyle textStyle = new Label.LabelStyle(mFont, textColor);
 
-        /*
 		TextActor gameOverTextActor;;
-		gameOverTextActor = new TextActor();
-		gameOverTextActor.setText("GAME OVER");
-		gameOverTextActor.setFontHeight(Gdx.graphics.getWidth()/10);
-		
+		gameOverTextActor = new TextActor("GAME OVER", textStyle);
+		gameOverTextActor.setScale(5);
 		float x = Gdx.graphics.getWidth() / 2 - gameOverTextActor.getWidth()/2;
 		float y = Gdx.graphics.getHeight() / 2 - gameOverTextActor.getHeight()/2;
 		gameOverTextActor.setPosition(x, y);
 		
 		mStage.addActor(gameOverTextActor);
 		
-		mScoreTextActor = new TextActor();
-		mScoreTextActor.setFontHeight(Gdx.graphics.getWidth()/30);
+		mScoreTextActor = new TextActor("", textStyle);
+		mScoreTextActor.setFontScale(Gdx.graphics.getWidth()/30);
 		y -= mScoreTextActor.getHeight() + Gdx.graphics.getWidth() / 25;
 		
 		mScoreTextActor.setY(y);
 		
 		mStage.addActor(mScoreTextActor);
 		
-		TextActor pressAnyTextActor = new TextActor();
-		pressAnyTextActor.setText("PRESS ANY KEY TO CONTINUE");
-		pressAnyTextActor.setFontHeight(Gdx.graphics.getWidth() / 40);
+		TextActor pressAnyTextActor = new TextActor("TOUCH THE SCREEN TO CONTINUE", textStyle);
+		pressAnyTextActor.setFontScale(5);
 		
 		x = Gdx.graphics.getWidth() /2 - pressAnyTextActor.getWidth()/2;
 		y = Gdx.graphics.getWidth() / 30;
 		pressAnyTextActor.setPosition(x, y);
 		
 		mStage.addActor(pressAnyTextActor);
-		*/
-		mStage.addListener(new InputListener() {
-			
-			@Override
-			public boolean keyDown(InputEvent event, int keycode) {
+
+        mStage.addListener(new InputListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				GhostHunterGame.getInstance().setScreen(SplashScreen.getInstance());
 				return true;
 			}
@@ -86,8 +91,6 @@ public class GameOverScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-        mStage.getViewport().update(width, height);
-		
 	}
 	
 	@Override
