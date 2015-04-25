@@ -22,7 +22,8 @@ public class GameOverScreen implements Screen {
 	public GameOverScreen() {
 		mInstance = this;
 		mStage = new Stage();
-		
+
+        /*
 		TextActor gameOverTextActor;;
 		gameOverTextActor = new TextActor();
 		gameOverTextActor.setText("GAME OVER");
@@ -51,7 +52,7 @@ public class GameOverScreen implements Screen {
 		pressAnyTextActor.setPosition(x, y);
 		
 		mStage.addActor(pressAnyTextActor);
-		
+		*/
 		mStage.addListener(new InputListener() {
 			
 			@Override
@@ -85,7 +86,7 @@ public class GameOverScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		//mStage.setViewport(width, height);
+        mStage.getViewport().update(width, height);
 		
 	}
 	

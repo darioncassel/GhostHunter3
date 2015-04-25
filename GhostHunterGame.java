@@ -18,8 +18,8 @@ public class GhostHunterGame extends Game {
 	}
 
 	@Override
-	public void create() {	
-		
+	public void create() {
+
 		mInstance = this;
 		
 		mResources = new ResourceManager();

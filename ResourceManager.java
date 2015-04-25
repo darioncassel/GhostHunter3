@@ -54,7 +54,7 @@ public class ResourceManager implements Disposable {
 		ghostTexture = new Texture(Gdx.files.internal("data/ghost.png"));
 
 		for(int i = 0; i < 4; i++) {
-			ObstacleTextureArray[i] = new Texture(Gdx.files.internal("data/Obstacle" + i + ".png"));
+			ObstacleTextureArray[i] = new Texture(Gdx.files.internal("data/obstacle" + i + ".png"));
 		}
 
 	}

@@ -122,13 +122,13 @@ public class MainGameScreen implements Screen {
 		float fontHeight = Gdx.graphics.getHeight() / 20;
 		float x = padding;
 		float y = Gdx.graphics.getHeight() - padding - fontHeight;
-
+        /*
 		mHudScoreActor = new TextActor();
 		mHudScoreActor.setFontHeight(fontHeight);
 		mHudScoreActor.setPosition(x, y);
 
 		mHudStage.addActor(mHudScoreActor);
-
+        */
 		float size =  Gdx.graphics.getHeight() / 20;
 
 		y -= size + padding;
@@ -275,7 +275,7 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		//mStage.setViewport(width, height);
+        mStage.getViewport().update(width, height);
 
 	}
 
