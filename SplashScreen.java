@@ -40,12 +40,23 @@ public class SplashScreen implements Screen {
     public void show() {
         mFont = new BitmapFont();
         textColor = new Color();
-
         textColor.set(1,1,1,1);
         Label.LabelStyle textStyle = new Label.LabelStyle(mFont, textColor);
-        TextActor title = new TextActor("Hello, World!", textStyle);
+
+        TextActor title = new TextActor("GHOST HUNTER", textStyle);
+        title.setFontScale(5);
+        float x = Gdx.graphics.getWidth() /2 - title.getWidth()/2;
+        float y = Gdx.graphics.getHeight() /2 - title.getHeight()/2;
+        title.setPosition(x, y);
+
+        TextActor touchStart = new TextActor("TOUCH THE SCREEN TO START!", textStyle);
+        touchStart.setFontScale(5);
+        x = Gdx.graphics.getWidth() /2;
+        y = Gdx.graphics.getWidth() / 30;
+        touchStart.setPosition(x, y);
 
         mStage.addActor(title);
+        mStage.addActor(touchStart);
     }
 
     @Override
