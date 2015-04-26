@@ -3,10 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,8 +16,6 @@ public class SplashScreen implements Screen {
     private static SplashScreen mInstance;
     private BitmapFont mFont;
     private Color textColor;
-    private SpriteBatch batch;
-    private Sprite splash;
 
     public static SplashScreen getInstance() {
         return mInstance;
@@ -30,12 +24,9 @@ public class SplashScreen implements Screen {
     public SplashScreen(){
         mInstance = this;
         mFont = new BitmapFont();
-        
         textColor = new Color();
         textColor.set(1,1,1,1);
         Label.LabelStyle textStyle = new Label.LabelStyle(mFont, textColor);
-
-
 
         TextActor title = new TextActor("GHOST HUNTER", textStyle);
         title.setFontScale(5);
@@ -80,6 +71,7 @@ public class SplashScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         mStage.act();
         mStage.draw();
     }
@@ -90,9 +82,7 @@ public class SplashScreen implements Screen {
 
     @Override
     public void show() {
-
         Gdx.input.setInputProcessor(mStage);
-
     }
 
     @Override

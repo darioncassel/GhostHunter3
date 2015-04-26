@@ -106,7 +106,7 @@ public class MainGameScreen implements Screen {
                 instLifepackCount++;
             }
         }
-        if(instLifepackCount<2) {
+        if(instLifepackCount<1) {
             mActorList.add(lifepack);
         }
         return lifepack;
