@@ -25,7 +25,7 @@ public class BombActor extends DamageableActor {
     public void damage(float angle) {
         super.damage(angle);
         fireBullets();
-        MainGameScreen.getInstance().playerInvincible(10);
+        MainGameScreen.getInstance().playerInvincible(1);
     }
 
     public BombActor() {

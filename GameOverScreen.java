@@ -22,7 +22,7 @@ public class GameOverScreen implements Screen {
 		return mInstance;
 	}
 
-	private TextActor mScoreTextActor;
+	private TextActor score;
 	
 	public GameOverScreen() {
 		mInstance = this;
@@ -33,30 +33,30 @@ public class GameOverScreen implements Screen {
         textColor.set(1,1,1,1);
         Label.LabelStyle textStyle = new Label.LabelStyle(mFont, textColor);
 
-		TextActor gameOverTextActor;;
-		gameOverTextActor = new TextActor("GAME OVER", textStyle);
-		gameOverTextActor.setFontScale(5);
-		float x = Gdx.graphics.getWidth() / 2 - gameOverTextActor.getWidth()/2;
-		float y = Gdx.graphics.getHeight() / 2 - gameOverTextActor.getHeight()/2;
-		gameOverTextActor.setPosition(x, y);
+		TextActor gameOverText;;
+		gameOverText = new TextActor("GAME OVER", textStyle);
+		gameOverText.setFontScale(5);
+        float y = Gdx.graphics.getWidth() /2 - gameOverText.getWidth()/4;
+        float x = Gdx.graphics.getHeight() /2 +100;
+		gameOverText.setPosition(x, y);
 		
-		mStage.addActor(gameOverTextActor);
+		mStage.addActor(gameOverText);
 		
-		mScoreTextActor = new TextActor("", textStyle);
-		mScoreTextActor.setFontScale(5);
-		y -= mScoreTextActor.getHeight() + Gdx.graphics.getWidth() / 25;
-		mScoreTextActor.setY(y);
+		score = new TextActor("", textStyle);
+		score.setFontScale(5);
+        x = Gdx.graphics.getWidth() / 2 - score.getWidth()/4;
+		y -= score.getHeight() + Gdx.graphics.getWidth() / 25;
+		score.setPosition(x, y);
 		
-		mStage.addActor(mScoreTextActor);
+		mStage.addActor(score);
 		
-		TextActor pressAnyTextActor = new TextActor("TOUCH THE SCREEN TO CONTINUE", textStyle);
-		pressAnyTextActor.setFontScale(5);
+		TextActor touchContinueText = new TextActor("TOUCH THE SCREEN TO CONTINUE", textStyle);
+		touchContinueText.setFontScale(5);
+        x = Gdx.graphics.getWidth() / 2 - touchContinueText.getWidth()-300;
+        y = Gdx.graphics.getHeight() / 2;
+		touchContinueText.setPosition(x, y);
 		
-		x = Gdx.graphics.getWidth() /2 - pressAnyTextActor.getWidth()/2;
-		y = Gdx.graphics.getWidth() / 30;
-		pressAnyTextActor.setPosition(x, y);
-		
-		mStage.addActor(pressAnyTextActor);
+		mStage.addActor(touchContinueText);
 
         mStage.addListener(new InputListener() {
             @Override
@@ -70,9 +70,9 @@ public class GameOverScreen implements Screen {
 	
 	public void setScore(int score) {
 		
-		mScoreTextActor.updateText("SCORE : " + score);
-		float x = Gdx.graphics.getWidth() / 2 - mScoreTextActor.getWidth()/2;
-		mScoreTextActor.setX(x);
+		this.score.updateText("SCORE : " + score);
+		float x = Gdx.graphics.getWidth() / 2 - this.score.getWidth()/2;
+		this.score.setX(x);
 		
 	}
 

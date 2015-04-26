@@ -64,7 +64,7 @@ public class PlayerActor extends DamageableActor  {
 		float shipSize = Gdx.graphics.getWidth() / 25;
 		setSize(shipSize, shipSize);
 
-		addAction(Actions.sequence(Actions.delay(6), Actions.run(new Runnable() {
+		addAction(Actions.sequence(Actions.delay(1), Actions.run(new Runnable() {
 
 			@Override
 			public void run() {
