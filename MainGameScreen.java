@@ -6,12 +6,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 public class MainGameScreen implements Screen {
 
@@ -72,6 +76,17 @@ public class MainGameScreen implements Screen {
     private BitmapFont mFont;
     private Color textColor;
 
+    private Touchpad touchpad;
+    private Touchpad.TouchpadStyle touchpadStyle;
+    private Skin touchpadSkin;
+    private Drawable touchBackground;
+    private Drawable touchKnob;
+    private Touchpad touchpad2;
+    private Touchpad.TouchpadStyle touchpadStyle2;
+    private Skin touchpadSkin2;
+    private Drawable touchBackground2;
+    private Drawable touchKnob2;
+
 	private Stage mHudStage;
 	private TextActor mHudScoreActor;
 	private final PlayerActor[] mHudLivesArray = new PlayerActor[3];
@@ -115,8 +130,36 @@ public class MainGameScreen implements Screen {
 
 	public void incrementScore() {
 		mScore += 25;
-		mHudScoreActor.updateText("SCORE : " + mScore);
+		mHudScoreActor.setText("SCORE : " + mScore);
 	}
+
+    private void setupTouchControlAreas() {
+        touchpadSkin = new Skin();
+        touchpadSkin.add("touchBackground", new Texture("touchBackground.png"));
+        touchpadSkin.add("touchKnob", new Texture("touchKnob.png"));
+        touchpadStyle = new Touchpad.TouchpadStyle();
+        touchBackground = touchpadSkin.getDrawable("touchBackground");
+        touchKnob = touchpadSkin.getDrawable("touchKnob");
+        touchpadStyle.background = touchBackground;
+        touchpadStyle.knob = touchKnob;
+        touchpad = new Touchpad(15, touchpadStyle);
+        touchpad.setBounds(15, 15, 400, 400);
+
+        touchpadSkin2 = new Skin();
+        touchpadSkin2.add("touchBackground", new Texture("touchBackground.png"));
+        touchpadSkin2.add("touchKnob", new Texture("touchKnob.png"));
+        touchpadStyle2 = new Touchpad.TouchpadStyle();
+        touchBackground2 = touchpadSkin2.getDrawable("touchBackground");
+        touchKnob2 = touchpadSkin2.getDrawable("touchKnob");
+        touchpadStyle2.background = touchBackground2;
+        touchpadStyle2.knob = touchKnob2;
+        touchpad2 = new Touchpad(15, touchpadStyle2);
+        touchpad2.setBounds(1400, 15, 400, 400);
+
+        mHudStage.addActor(touchpad);
+        mHudStage.addActor(touchpad2);
+
+    }
 
 	public MainGameScreen() {
 		mInstance = this;
@@ -155,7 +198,8 @@ public class MainGameScreen implements Screen {
 			mHudStage.addActor(life);
 		}
 
-		Gdx.input.setInputProcessor(mStage);
+        setupTouchControlAreas();
+
 	}
 
 	public void initializeGame() {
@@ -184,8 +228,31 @@ public class MainGameScreen implements Screen {
 	@Override
 	public void dispose() {
 		mStage.dispose();
-
 	}
+
+    private float fireDelay = 0;
+    private void handleInput() {
+        if(touchpad.isTouched()){
+            float x = touchpad.getKnobPercentX()*5;
+            float y = touchpad.getKnobPercentY()*5;
+            if(mPlayer!=null) {
+                mPlayer.moveBy(x, y);
+            }
+        }
+        if(touchpad2.isTouched()){
+            Vector2 vec = new Vector2();
+            vec.set(-touchpad2.getKnobPercentX(), touchpad2.getKnobPercentY());
+            if(mPlayer!=null) {
+                mPlayer.setAngle((float)3.14/2 - vec.angleRad());
+                fireDelay++;
+                if (fireDelay == 15) {
+                    mPlayer.fireBullet();
+                    fireDelay = 0;
+                }
+
+            }
+        }
+    }
 
 	private void handleKillableActors() {
 
@@ -283,8 +350,6 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-        mStage.getViewport().update(width, height);
-
 	}
 
 
@@ -294,6 +359,7 @@ public class MainGameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        handleInput();
 		handleKillableActors();
 		handleCollision();
 		handleBullets();
@@ -307,7 +373,7 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(mStage);
+		Gdx.input.setInputProcessor(mHudStage);
 
 	}
 

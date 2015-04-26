@@ -6,12 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class PlayerActor extends DamageableActor  {
 
-	private boolean mIsDamageable = false;
+	public boolean mIsDamageable = false;
 	private boolean mIsAccelerating = false;
 	private float mElapsedTime = 0;
 	float mAngularSpeed = 0;
@@ -35,7 +34,7 @@ public class PlayerActor extends DamageableActor  {
 		return tip;
 	}
 
-	private void fireBullet() {
+	public void fireBullet() {
 
 		BulletActor bullet = MainGameScreen.getInstance().addBullet();
 
@@ -50,7 +49,6 @@ public class PlayerActor extends DamageableActor  {
 	@Override
 	protected void setStage(Stage stage) {
 		super.setStage(stage);
-		stage.setKeyboardFocus(this);
 	}
 
 	@Override
@@ -58,58 +56,9 @@ public class PlayerActor extends DamageableActor  {
 		if(mIsDamageable) {
 			super.damage(angle);
 			MainGameScreen.getInstance().killPlayer();
-			getStage().setKeyboardFocus(null);
 		}
 	}
 
-	private final InputListener mInputListener = new InputListener() {
-
-		@Override
-		public boolean keyDown(InputEvent event, int keycode) {
-			if(event.getKeyCode() == Keys.UP) {
-				mIsAccelerating = true;
-				return true;
-			}
-
-			if(event.getKeyCode() == Keys.LEFT) {
-				mAngularSpeed = 5;
-				return true;
-			}
-
-			if(event.getKeyCode() == Keys.RIGHT) {
-				mAngularSpeed = -5;
-				return true;
-			}
-
-			if(event.getKeyCode() == Keys.SPACE) {
-				fireBullet();
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public boolean keyUp(InputEvent event, int keycode) {
-			if(event.getKeyCode() == Keys.UP) {
-				mIsAccelerating = false;
-				return true;
-			}
-
-			if(event.getKeyCode() == Keys.LEFT) {
-				mAngularSpeed = 0;
-				return true;
-			}
-
-			if(event.getKeyCode() == Keys.RIGHT) {
-				mAngularSpeed = 0;
-				return true;
-			}
-
-
-			return false;
-		}
-	};
 
 	public PlayerActor() {
 		setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
@@ -117,7 +66,6 @@ public class PlayerActor extends DamageableActor  {
 
 		float shipSize = Gdx.graphics.getWidth() / 25;
 		setSize(shipSize, shipSize);
-		addListener(mInputListener);
 
 		addAction(Actions.sequence(Actions.delay(6), Actions.run(new Runnable() {
 
@@ -138,7 +86,6 @@ public class PlayerActor extends DamageableActor  {
 		mElapsedTime += deltaTime;
 
 		float force = 0;
-
 
 		if(mSpeed > 0.2) {
 			force = getWidth() * mSpeed * 0.05f;

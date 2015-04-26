@@ -67,6 +67,8 @@ public class BaseActor extends Actor {
         return mAngle;
     }
 
+    public void setAngle(float ang) {mAngle = ang;}
+
     public float getSpeed() {
         return mSpeed;
     }

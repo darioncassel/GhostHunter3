@@ -30,14 +30,14 @@ public class SplashScreen implements Screen {
 
         TextActor title = new TextActor("GHOST HUNTER", textStyle);
         title.setFontScale(5);
-        float x = Gdx.graphics.getWidth() /2 - title.getWidth()/2;
-        float y = Gdx.graphics.getHeight() /2 - title.getHeight()/2;
+        float y = Gdx.graphics.getWidth() /2 - title.getWidth()/4;
+        float x = Gdx.graphics.getHeight() /2;
         title.setPosition(x, y);
 
         TextActor touchStart = new TextActor("TOUCH THE SCREEN TO START!", textStyle);
         touchStart.setFontScale(5);
-        x = Gdx.graphics.getWidth() /2 - title.getWidth()/2;;
-        y = Gdx.graphics.getWidth() / 30;
+        x = Gdx.graphics.getWidth() / 2 - touchStart.getWidth();
+        y = Gdx.graphics.getHeight() / 2;
         touchStart.setPosition(x, y);
 
         mStage.addActor(title);
