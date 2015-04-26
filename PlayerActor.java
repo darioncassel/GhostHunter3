@@ -2,8 +2,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -42,7 +40,6 @@ public class PlayerActor extends DamageableActor  {
 
 		bullet.setPosition(tip.x, tip.y);
 		bullet.setAngle(mAngle);
-
 
 	}
 
@@ -134,15 +131,5 @@ public class PlayerActor extends DamageableActor  {
 				playerTexture.getWidth(), playerTexture.getHeight(), false, false);
 
 
-		if(mIsAccelerating) {
-			Texture playerJetTexture = ResourceManager.getInstance().playerJetTexture;
-			float jetAlpha = (float) (Math.cos((mElapsedTime )* 40f));
-			batch.setColor(getColor().r, getColor().g, getColor().b,
-					alpha * jetAlpha * getColor().a * parentAlpha);
-
-			batch.draw(playerJetTexture, getX(), getY(), getWidth()/2, getHeight()/2,
-					getWidth(), getHeight(), 1, 1, angleDegrees, 0, 0,
-					playerJetTexture.getWidth(), playerJetTexture.getHeight(), false, false);
-		}
 	}
 }

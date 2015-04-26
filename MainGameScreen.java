@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ai.steer.Steerable;
+import com.badlogic.gdx.ai.steer.behaviors.Pursue;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -54,25 +56,64 @@ public class MainGameScreen implements Screen {
 
 	public BulletActor addBullet() {
 		BulletActor bullet = new BulletActor();
-		mActorList.add(bullet);
+        if(mBulletActorList.size()<40) {
+            mActorList.add(bullet);
+        }
 		return bullet;
-
 	}
 
 	public ObstacleActor addObstacle() {
 		ObstacleActor obstacle = new ObstacleActor();
-		mActorList.add(obstacle);
+        if(mActorList.size()<50) {
+            mActorList.add(obstacle);
+        }
 		return obstacle;
 	}
 
 	public GhostActor addGhost() {
-		GhostActor saucer = new GhostActor();
-		mActorList.add(saucer);
-		return saucer;
+		GhostActor ghost = new GhostActor();
+        int instGhostCount = 0;
+        for(BaseActor a : mActorList){
+            if(a instanceof GhostActor) {
+                instGhostCount++;
+            }
+        }
+        if(instGhostCount<5) {
+            mActorList.add(ghost);
+        }
+		return ghost;
 	}
 
+    public BombActor addBomb() {
+        BombActor bomb = new BombActor();
+        int instBombCount = 0;
+        for(BaseActor a : mActorList){
+            if(a instanceof BombActor) {
+                instBombCount++;
+            }
+        }
+        if(instBombCount<4) {
+            mActorList.add(bomb);
+        }
+        return bomb;
+    }
+
+    public LifepackActor addLifepack() {
+        LifepackActor lifepack = new LifepackActor();
+        int instLifepackCount = 0;
+        for(BaseActor a : mActorList){
+            if(a instanceof LifepackActor) {
+                instLifepackCount++;
+            }
+        }
+        if(instLifepackCount<2) {
+            mActorList.add(lifepack);
+        }
+        return lifepack;
+    }
+
 	private int mScore;
-	private int mNumLives;
+	public int mNumLives;
     private BitmapFont mFont;
     private Color textColor;
 
@@ -107,6 +148,13 @@ public class MainGameScreen implements Screen {
 		})));
 	}
 
+    public void updateLives() {
+        for(int i = 0; i < mNumLives; i ++) {
+            PlayerActor life = mHudLivesArray[i];
+            life.setVisible(true);
+        }
+    }
+
 	public void killPlayer() {
 
 		mNumLives -= 1;
@@ -115,10 +163,7 @@ public class MainGameScreen implements Screen {
 			life.setVisible(false);
 		}
 
-		for(int i = 0; i < mNumLives; i ++) {
-			PlayerActor life = mHudLivesArray[i];
-			life.setVisible(true);
-		}
+		updateLives();
 
 		if(mNumLives != 0) {
 			queuePlayerSpawn();
@@ -128,9 +173,26 @@ public class MainGameScreen implements Screen {
 		}
 	}
 
+    public void playerInvincible(Integer x) {
+        if(mPlayer!=null) {
+            mPlayer.mIsDamageable = false;
+            mPlayer.addAction(Actions.sequence(Actions.delay(x), Actions.run(new Runnable() {
+                @Override
+                public void run() {
+                    if(mPlayer!=null) {
+                        mPlayer.mIsDamageable = true;
+                    }
+                }
+            })));
+        }
+    }
+
 	public void incrementScore() {
 		mScore += 25;
 		mHudScoreActor.setText("SCORE : " + mScore);
+        if(mScore%100==0) {
+            addLifepack();
+        }
 	}
 
     private void setupTouchControlAreas() {
@@ -304,6 +366,19 @@ public class MainGameScreen implements Screen {
 		}
 	}
 
+    private void handleAI() {
+        for(DamageableActor actor : mDamageableActorList) {
+            if(actor instanceof ObstacleActor) {
+                if(mPlayer!=null) {
+                    Vector2 playerPos = new Vector2(mPlayer.getX(), mPlayer.getY());
+                    actor.setAngle(playerPos.angleRad());
+                    Vector2 path = new Vector2(mPlayer.getX()-actor.getX(), mPlayer.getY()-actor.getY());
+                    actor.moveBy(path.x/500, path.y/500);
+                }
+            }
+        }
+    }
+
 
 
 	public void queuePlayerSpawn() {
@@ -360,6 +435,7 @@ public class MainGameScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         handleInput();
+        handleAI();
 		handleKillableActors();
 		handleCollision();
 		handleBullets();

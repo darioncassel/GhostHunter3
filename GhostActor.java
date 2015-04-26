@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class GhostActor extends DamageableActor {
 
-
 	private static final Random mRandomizeTime = new Random(158);
 	private static final Random mRandomizeFireAngle = new Random(170);
 
@@ -65,6 +64,7 @@ public class GhostActor extends DamageableActor {
 		super.damage(angle);
         MainGameScreen.getInstance().incrementScore();
         MainGameScreen.getInstance().queueGhostSpawn();
+        MainGameScreen.getInstance().addBomb();
 	}
 
 

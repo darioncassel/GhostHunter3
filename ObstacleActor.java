@@ -18,8 +18,6 @@ public class ObstacleActor extends DamageableActor {
 	private Texture mTexture;
 	private int mSizeType = 0;
 
-
-
 	public void setSizeType(int sizeType) {
 		mSizeType = sizeType;
 		float floatSize = sizeType * Gdx.graphics.getWidth() / 35f;
@@ -100,7 +98,7 @@ public class ObstacleActor extends DamageableActor {
 				angle0 += 3.14f;
 				angle1 += 3.14f;
 			}
-
+            /*
 			ObstacleActor obstacle0 = MainGameScreen.getInstance().addObstacle();
 			obstacle0.setSizeType(targetSizeType);
 			obstacle0.setParams(angle0, speed0);
@@ -110,7 +108,11 @@ public class ObstacleActor extends DamageableActor {
 			obstacle1.setSizeType(targetSizeType);
 			obstacle1.setParams(angle1, speed1);
 			obstacle1.setPosition(pos1X, pos1Y);
-
+            */
+            ObstacleActor obstacle1 = MainGameScreen.getInstance().addObstacle();
+            obstacle1.calcStartParams();
+            ObstacleActor obstacle2 = MainGameScreen.getInstance().addObstacle();
+            obstacle2.calcStartParams();
 		} else {
 
 			mNumObstaclesKilled ++;
@@ -134,12 +136,13 @@ public class ObstacleActor extends DamageableActor {
 	@Override
 	public void act(float deltaTime) {
 		super.act(deltaTime);
-
+/*
 		float x = getX();
 		float y = getY();
 		x -= deltaTime * mSpeed  * Math.sin(mAngle);
 		y += deltaTime * mSpeed  * Math.cos(mAngle);
 		setPosition(x, y);
+	*/
 
 	}
 
@@ -157,6 +160,5 @@ public class ObstacleActor extends DamageableActor {
 				mTexture.getWidth(), mTexture.getHeight(), false, false);
 
 	}
-
 
 }
