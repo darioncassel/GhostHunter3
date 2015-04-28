@@ -20,6 +20,7 @@ public class ResourceManager implements Disposable {
 		mInstance = this;
 	}
 
+    public Texture backgroundTexture;
 	public Texture playerTexture;
 	public Texture bombTexture;
 	public Texture blank16Texture;
@@ -29,11 +30,12 @@ public class ResourceManager implements Disposable {
 
 	public void loadResources() {
 
+        backgroundTexture = new Texture(Gdx.files.internal("background.png"));
 		playerTexture = new Texture(Gdx.files.internal("data/player.png"));
-		bombTexture = new Texture(Gdx.files.internal("data/saucer.png"));
-		blank16Texture = new Texture(Gdx.files.internal("data/blank16.png"));
+		bombTexture = new Texture(Gdx.files.internal("data/Bomb.png"));
+		blank16Texture = new Texture(Gdx.files.internal("data/bulletFinal.png"));
 		ghostTexture = new Texture(Gdx.files.internal("data/ghost.png"));
-        lifepackTexture = new Texture(Gdx.files.internal("data/block.png"));
+        lifepackTexture = new Texture(Gdx.files.internal("data/Lifepack.png"));
 
 		for(int i = 0; i < 4; i++) {
 			ObstacleTextureArray[i] = new Texture(Gdx.files.internal("data/obstacle" + i + ".png"));
@@ -43,6 +45,7 @@ public class ResourceManager implements Disposable {
 
 	@Override
 	public void dispose() {
+        backgroundTexture.dispose();
 		bombTexture.dispose();
 		playerTexture.dispose();
 		blank16Texture.dispose();

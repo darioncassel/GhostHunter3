@@ -22,7 +22,7 @@ public class GhostActor extends DamageableActor {
 
 	public void fireBullet() {
 
-		BulletActor bullet = MainGameScreen.getInstance().addBullet();
+		BulletActor bullet = MainGameScreen.getInstance().addBullet(75);
 
 		float fireAngle = 2 * 3.14f * mRandomizeFireAngle.nextFloat();
 
@@ -69,7 +69,7 @@ public class GhostActor extends DamageableActor {
 
 
 	public GhostActor() {
-		float size = Gdx.graphics.getWidth() / 15;
+		float size = Gdx.graphics.getWidth() / 10;
 
 		setWrapEdge(true);
 		setSize(size, size);

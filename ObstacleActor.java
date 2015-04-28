@@ -136,7 +136,7 @@ public class ObstacleActor extends DamageableActor {
 	@Override
 	public void act(float deltaTime) {
 		super.act(deltaTime);
-/*
+    /*
 		float x = getX();
 		float y = getY();
 		x -= deltaTime * mSpeed  * Math.sin(mAngle);
@@ -154,6 +154,7 @@ public class ObstacleActor extends DamageableActor {
 				getColor().a * parentAlpha);
 
 		float angleDegrees = mAngle * 360 / 2 / 3.14f;
+
 
 		batch.draw(mTexture, getX(), getY(), getWidth()/2, getHeight()/2,
 				getWidth(), getHeight(), 1, 1, angleDegrees, 0, 0,

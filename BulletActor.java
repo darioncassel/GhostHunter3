@@ -18,9 +18,8 @@ public class BulletActor extends BaseActor {
 		return mAngle;
 	}
 	
-	public BulletActor() {
-		
-		float size = Gdx.graphics.getWidth()/250;
+	public BulletActor(int x) {
+		float size = Gdx.graphics.getWidth()/x;
 		setSize(size, size);
 	}
 	

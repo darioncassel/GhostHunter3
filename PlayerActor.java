@@ -34,12 +34,13 @@ public class PlayerActor extends DamageableActor  {
 
 	public void fireBullet() {
 
-		BulletActor bullet = MainGameScreen.getInstance().addBullet();
+        if(!MainGameScreen.getInstance().mPlayer.isDead()) {
+            BulletActor bullet = MainGameScreen.getInstance().addBullet(100);
+            Vector2 tip = getTipPosition();
 
-		Vector2 tip = getTipPosition();
-
-		bullet.setPosition(tip.x, tip.y);
-		bullet.setAngle(mAngle);
+            bullet.setPosition(tip.x, tip.y);
+            bullet.setAngle(mAngle);
+        }
 
 	}
 
@@ -58,11 +59,12 @@ public class PlayerActor extends DamageableActor  {
 
 
 	public PlayerActor() {
+
 		setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		setWrapEdge(true);
 
-		float shipSize = Gdx.graphics.getWidth() / 25;
-		setSize(shipSize, shipSize);
+		float playerSize = Gdx.graphics.getWidth() / 12;
+		setSize(playerSize, playerSize);
 
 		addAction(Actions.sequence(Actions.delay(1), Actions.run(new Runnable() {
 

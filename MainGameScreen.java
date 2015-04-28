@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.ai.steer.Steerable;
-import com.badlogic.gdx.ai.steer.behaviors.Pursue;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,9 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 public class MainGameScreen implements Screen {
 
+    private Stage mBackgroundStage;
+
 	private Stage mStage;
 
-	private PlayerActor mPlayer;
+	public PlayerActor mPlayer;
 
 	private final ArrayList<BaseActor> mActorList =
 			new ArrayList<BaseActor>();
@@ -54,8 +54,8 @@ public class MainGameScreen implements Screen {
 		return player;
 	}
 
-	public BulletActor addBullet() {
-		BulletActor bullet = new BulletActor();
+	public BulletActor addBullet(int x) {
+		BulletActor bullet = new BulletActor(x);
         if(mBulletActorList.size()<40) {
             mActorList.add(bullet);
         }
@@ -197,7 +197,7 @@ public class MainGameScreen implements Screen {
 
     private void setupTouchControlAreas() {
         touchpadSkin = new Skin();
-        touchpadSkin.add("touchBackground", new Texture("touchBackground.png"));
+        touchpadSkin.add("touchBackground", new Texture("touchBackground1.png"));
         touchpadSkin.add("touchKnob", new Texture("touchKnob.png"));
         touchpadStyle = new Touchpad.TouchpadStyle();
         touchBackground = touchpadSkin.getDrawable("touchBackground");
@@ -208,7 +208,7 @@ public class MainGameScreen implements Screen {
         touchpad.setBounds(15, 15, 400, 400);
 
         touchpadSkin2 = new Skin();
-        touchpadSkin2.add("touchBackground", new Texture("touchBackground.png"));
+        touchpadSkin2.add("touchBackground", new Texture("touchBackground1.png"));
         touchpadSkin2.add("touchKnob", new Texture("touchKnob.png"));
         touchpadStyle2 = new Touchpad.TouchpadStyle();
         touchBackground2 = touchpadSkin2.getDrawable("touchBackground");
@@ -225,6 +225,7 @@ public class MainGameScreen implements Screen {
 
 	public MainGameScreen() {
 		mInstance = this;
+        mBackgroundStage = new Stage();
 		mStage = new Stage();
 		mHudStage = new Stage();
         mFont = new BitmapFont();
@@ -264,8 +265,14 @@ public class MainGameScreen implements Screen {
 
 	}
 
+    public void renderBackground() {
+        BackgroundActor background = new BackgroundActor();
+        mBackgroundStage.addActor(background);
+    }
+
 	public void initializeGame() {
 
+        renderBackground();
 		mActorList.clear();
 
 		addPlayer();
@@ -440,6 +447,7 @@ public class MainGameScreen implements Screen {
 		handleCollision();
 		handleBullets();
 
+        mBackgroundStage.draw();
 		mStage.act(delta);
 		mStage.draw();
 		mHudStage.draw();

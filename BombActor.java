@@ -10,7 +10,7 @@ public class BombActor extends DamageableActor {
 
     public void fireBullets() {
         for(int i=0; i<50; i++) {
-            BulletActor bullet = MainGameScreen.getInstance().addBullet();
+            BulletActor bullet = MainGameScreen.getInstance().addBullet(150);
             float fireAngle = 2 * 3.14f + 5*i;
             float x = getX() + getWidth() * 0.5f;
             float y = getY() + getHeight() * 0.5f;
