@@ -2,13 +2,17 @@ package com.mygdx.game;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 
 public class BombActor extends DamageableActor {
 
+    private Sound boom;
+
     public void fireBullets() {
+        boom.play();
         for(int i=0; i<50; i++) {
             BulletActor bullet = MainGameScreen.getInstance().addBullet(150);
             float fireAngle = 2 * 3.14f + 5*i;
@@ -25,10 +29,12 @@ public class BombActor extends DamageableActor {
     public void damage(float angle) {
         super.damage(angle);
         fireBullets();
+        boom.dispose();
         MainGameScreen.getInstance().playerInvincible(1);
     }
 
     public BombActor() {
+        boom = Gdx.audio.newSound(Gdx.files.internal("boom1.wav"));
         float size = Gdx.graphics.getWidth() / 20;
         setWrapEdge(true);
         setSize(size, size);

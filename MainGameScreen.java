@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -71,6 +73,7 @@ public class MainGameScreen implements Screen {
 	}
 
 	public GhostActor addGhost() {
+        this.laugh.play();
 		GhostActor ghost = new GhostActor();
         int instGhostCount = 0;
         for(BaseActor a : mActorList){
@@ -132,7 +135,14 @@ public class MainGameScreen implements Screen {
 	private TextActor mHudScoreActor;
 	private final PlayerActor[] mHudLivesArray = new PlayerActor[3];
 
+    private Sound laugh;
+    private Sound gameover;
+    private Sound hurt;
+    private Sound shot;
+    private Music music;
+
 	private void doGameOver() {
+        this.gameover.play();
 		GameOverScreen.getInstance().setScore(mScore);
 		GhostHunterGame.getInstance().setScreen(GameOverScreen.getInstance());
 	}
@@ -156,7 +166,7 @@ public class MainGameScreen implements Screen {
     }
 
 	public void killPlayer() {
-
+        this.hurt.play();
 		mNumLives -= 1;
 
 		for(PlayerActor life : mHudLivesArray) {
@@ -224,6 +234,16 @@ public class MainGameScreen implements Screen {
     }
 
 	public MainGameScreen() {
+
+        laugh = Gdx.audio.newSound(Gdx.files.internal("laugh1.wav"));
+        gameover = Gdx.audio.newSound(Gdx.files.internal("gameover1.wav"));
+        hurt = Gdx.audio.newSound(Gdx.files.internal("hurt1.wav"));
+        shot = Gdx.audio.newSound(Gdx.files.internal("shot1.wav"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("music1.mp3"));
+
+        this.music.setLooping(true);
+        this.music.play();
+
 		mInstance = this;
         mBackgroundStage = new Stage();
 		mStage = new Stage();
@@ -315,6 +335,7 @@ public class MainGameScreen implements Screen {
                 mPlayer.setAngle((float)3.14/2 - vec.angleRad());
                 fireDelay++;
                 if (fireDelay == 15) {
+                    this.shot.play();
                     mPlayer.fireBullet();
                     fireDelay = 0;
                 }

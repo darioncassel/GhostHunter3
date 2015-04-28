@@ -3,6 +3,7 @@ package com.mygdx.game;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -21,7 +22,6 @@ public class GhostActor extends DamageableActor {
 	}
 
 	public void fireBullet() {
-
 		BulletActor bullet = MainGameScreen.getInstance().addBullet(75);
 
 		float fireAngle = 2 * 3.14f * mRandomizeFireAngle.nextFloat();
@@ -69,6 +69,7 @@ public class GhostActor extends DamageableActor {
 
 
 	public GhostActor() {
+
 		float size = Gdx.graphics.getWidth() / 10;
 
 		setWrapEdge(true);
